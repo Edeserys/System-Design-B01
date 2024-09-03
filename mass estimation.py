@@ -16,12 +16,12 @@ alt_CR = alt_CR_ft * 0.3048 # m
 dist_TO = 1296 # m
 dist_L =  1210 # m
 R_nom = 2019*1000 # m 
-Design_payload = 7,200 # kg
+Design_payload = 7200 # kg
 
 # 2) Full Fuel
-max_MTOW = 2,574 # km 
-maxMTOW_payload = 6,355 # kg
-ZeroPayload_R = 2,963 # km
+max_MTOW = 2574 # km 
+maxMTOW_payload = 6355 # kg
+ZeroPayload_R = 2963 # km
 
 # Assumptions:
 AR = 10
@@ -52,5 +52,3 @@ eta_j = M*a_CR / (TSFC * E_spec)
 R_lost = 1/0.7 * L_over_D_CR * (alt_CR+V_CR**2/(2*g)) # m
 R_eq = (R_nom + R_lost)*(1 + f_con) + 1.2 * R_div + t_E * V_CR 
 f_FuelMass = 1 - euler**(-R_eq/(eta_j*E_spec*10**6/g*L_over_D_CR))
-
-print(R_eq/1000, f_FuelMass)
