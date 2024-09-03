@@ -9,7 +9,7 @@ g = 9.81 # m/s^2
 
 # TLARs:
 # 1) Not Full Fuel
-max_payload = 9,302 # kg
+max_payload = 9302 # kg
 M = 0.77 
 alt_CR_ft = 35000 # ft
 alt_CR = alt_CR_ft * 0.3048 # m
