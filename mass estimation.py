@@ -52,6 +52,9 @@ T_CR = 218.808 # K, ISA
 a_CR = math.sqrt(gamma*R*T_CR)
 t_E = 30 * 60 # s
 R_div = 300*1000 # m
+C_L_CR = 1.7
+C_L_TO = 1.9
+C_L_L = 2.6
 
 # Parameters:
 f_con = 0.05
