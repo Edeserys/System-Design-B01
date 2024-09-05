@@ -58,7 +58,8 @@ C_L_L = 2.6
 
 # Parameters:
 f_con = 0.05
-V_CR = M * a_CR # m/s
+V_CR = M * a_CR # m/
+OE_Mass_regression = 21034 # kg
 
 # Drag:
 C_D0_CR = WettedR * CF_Equi
@@ -75,15 +76,12 @@ R_nom_zero = ZeroPayload_R
 R_nom_design = Design_R
 R_eq_zero = (R_nom_zero + R_lost) * (1 + f_con) + 1.2 * R_div + t_E * V_CR
 R_eq_design = (R_nom_design + R_lost) * (1 + f_con) + 1.2 * R_div + t_E * V_CR
-f_FuelMass = 1 - euler**(-R_eq_design/(eta_j * E_spec*10**6/g * L_over_D_CR))
-print(f_FuelMass)
 R_aux_zero = R_eq_zero - R_nom_zero
 R_aux_design = R_eq_design - R_nom_design
 
 # Masses:
 OE_Mass = maxMTOW_payload * (euler**((max_MTOW_R+R_aux_design)/(eta_j * L_over_D_CR * E_spec * 10**6/g))-1) / ((euler**((ZeroPayload_R+R_aux_zero)/(eta_j * L_over_D_CR * E_spec * 10**6/g))-euler**((max_MTOW_R+R_aux_design)/(eta_j * L_over_D_CR * E_spec * 10**6/g))))
 Fuel_Mass = OE_Mass * (euler**((max_MTOW_R+R_aux_design)/(eta_j * L_over_D_CR * E_spec * 10**6/g))-1) + max_payload*(euler**((max_MTOW_R+R_aux_design)/(eta_j * L_over_D_CR * E_spec * 10**6/g)))
-#Fuel_Mass = OE_Mass * (euler**((ZeroPayload_R+R_aux)/(eta_j * L_over_D_CR * E_spec * 10**6/g))-1)
 MTOW = maxMTOW_payload + Fuel_Mass + OE_Mass
 
 # Mass Fractions:
@@ -92,5 +90,37 @@ f_OEMass = OE_Mass / MTOW
 f_payload = maxMTOW_payload / MTOW
 
 print("Fuel Mass Fraction: " + f"{f_FuelMass:.3f}" + "\nOperational Empty Mass Fraction: " + f"{f_OEMass:.3f}" + "\nPayload Mass Fraction: " + f"{f_payload:.3f}")
-print("\nOperational Empty Weight:", OE_Mass, "kg")
+
+sw = []
+print("\nMessages:")
+if (f_OEMass > 0.6):
+   print("Operational Empty Mass is way too high!")
+elif (0.5 <= f_OEMass <= 0.6):
+    print("Fuel Mass is within the bounds of 50 and 60 percent.")
+    sw = sw.append(False)
+elif (f_OEMass < 0.6):
+   print("Operational Empty Mass is way too little!")
+
+if (f_FuelMass > 0.3):
+   print("Fuel Mass is way too high!")
+elif (0.2 <= f_FuelMass <= 0.3):
+    print("Fuel Mass is within the bounds of 20 and 30 percent.")
+    sw = sw.append(False)
+elif (f_FuelMass < 0.3):
+   print("Fuel Mass is way too little!")
+
+if (f_payload > 0.3):
+   print("Payload Mass is way too high!")
+elif (0.1 <= f_payload <= 0.3):
+    print("Payload Mass is within the bounds of 10 and 30 percent.")
+    sw = sw.append(False)
+elif (f_payload < 0.3):
+   print("Payload Mass is way too little!")
+
+f_no_fuel = 1 - f_FuelMass
+MTOW = (OE_Mass_regression + maxMTOW_payload)/f_no_fuel
+Fuel_Mass = MTOW * f_FuelMass
+print("\nOperational Empty Weight:", OE_Mass_regression, "kg")
+print("Design Payload Mass:", maxMTOW_payload , "kg")
+print("Fuel Mass:", Fuel_Mass, "kg")
 print("Maximum Take-Off Weight:", MTOW, "kg")
