@@ -55,6 +55,7 @@ C_L_CR = 1.7
 T_CR = 218.808 # K, ISA 
 a_CR = math.sqrt(gamma * R * T_CR)
 V_CR = M * a_CR
+p_CR = 23842
 rho_CR = 0.3796
 
 # Landing
