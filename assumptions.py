@@ -16,3 +16,22 @@ R_div = 300 * 1000 # m
 C_L_CR = 1.7
 C_L_TO = 1.9
 C_L_L = 2.6
+
+# Aerodynamic characteristics
+C_D0_CR = WettedR * CF_Equi
+e_CR = 1/(AR * pi * psi + 1/phi)
+L_over_D_CR = 1/2 * math.sqrt(pi * AR * e_CR / C_D0_CR)
+
+# Sea Level
+rho_0 = 1.225 # kg/m^3
+T_0 = 288.15 # K
+p_0 = 101325 # Pa
+# Takeoff
+e_TO = e_CR
+rho_TO = rho_0
+T_TO = T_0
+p_TO = p_0
+L_TO = 1296 # m takeoff field length
+
+# Landing
+landing_field_length= 1210 #m

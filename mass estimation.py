@@ -57,9 +57,7 @@ V_CR = M * a_CR # m/
 OE_Mass_regression = 21034 # kg
 
 # Drag:
-C_D0_CR = WettedR * CF_Equi
-e_CR = 1/(AR * pi * psi + 1/phi)
-L_over_D_CR = 1/2 * math.sqrt(pi * AR * e_CR / C_D0_CR)
+#Moved to assumptions.py
 
 # Thrust:
 TSFC = 22 * BR**(-0.19) 
