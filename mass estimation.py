@@ -16,7 +16,7 @@
 # Import Libraries:
 import math
 import os
-from constants import pi, euler, gamma, R, g
+from constants import *
 
 os.system('cls')
 
@@ -46,39 +46,10 @@ def check_Mass_Fractions(f_OE, f_Fuel, f_payload):
       print("Payload Mass is way too little!")
 
 # TLARs:
-# 1) Not Full Fuel
-# max_payload = 9302 # kg
-# M = 0.77 
-# alt_CR_ft = 35000 # ft
-# alt_CR = alt_CR_ft * 0.3048 # m
-# dist_TO = 1296 # m.
-# dist_L =  1210 # m
-# Design_R = 2019 * 1000 # m 
-# Design_payload = 7200 # kg
-
-# # 2) Full Fuel
-# max_MTOW_R = 2574 * 1000 # m 
-# maxMTOW_payload = 6355 # kg
-# ZeroPayload_R = 2963 * 1000 # m
-from tlars import max_payload, M, alt_CR_ft, alt_CR, dist_TO, dist_L, Design_R, Design_payload, max_MTOW_R, maxMTOW_payload, ZeroPayload_R
+from tlars import *
 
 # Assumptions:
-# AR = 10
-# WettedR = 6
-# BR = 7 # Bypass Ratio [1-15]
-# Wetted_Area = 2000 # m^2
-# CF_Equi = 0.0031 # page 105
-# phi = 0.97 # page 106
-# psi = 0.0075 # page 106
-# E_spec = 44 # MJ/kg
-# T_CR = 218.808 # K, ISA 
-# a_CR = math.sqrt(gamma * R * T_CR)
-# t_E = 20 * 60 # s
-# R_div = 300 * 1000 # m
-# C_L_CR = 1.7
-# C_L_TO = 1.9
-# C_L_L = 2.6
-from assumptions import AR, WettedR, BR, Wetted_Area, CF_Equi, phi, psi, E_spec, T_CR, a_CR, t_E, R_div, C_L_CR, C_L_TO, C_L_L
+from assumptions import *
 
 # Parameters:
 f_con = 0.05
