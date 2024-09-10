@@ -2,25 +2,26 @@
 # Import Libraries
 # Set Constants
 # Top-Level Aircraft Requirements:
-    # Not Full Fuel Data
-    # Full Fuel Data
+   # Not Full Fuel Data
+   # Full Fuel Data
 # Assumptions
 # Flying Parameters
 # Drag
 # Thrust
 # Mass Estimation:
-   # Masses with ADSEE I Book Method
-      # Mass Fractions
-    # Mass Fractions
+   # 1) Masses with ADSEE I Book Method
+   # 2) Masses with Regression Analysis
+   # 3) Average Masses
+# Print and Check Results
 
 # Import Libraries:
 import math
 import os
-from constants import *
 
 os.system('cls')
 
-
+# Constants:
+from constants import *
 
 def check_Mass_Fractions(f_OE, f_Fuel, f_payload):
    print("\nMessages:")
@@ -45,6 +46,12 @@ def check_Mass_Fractions(f_OE, f_Fuel, f_payload):
    elif (f_payload < 0.3):
       print("Payload Mass is way too little!")
 
+def print_Results(OE, f_OE, payload, f_payload, Fuel, f_Fuel, MTOW):
+   print("Operational Empty Mass:", OE, "kg -", f"{f_OE:.3f}")
+   print("Design Payload Mass:", payload , "kg -", f"{f_payload:.3f}")
+   print("Fuel Mass:", f"{Fuel:.3f}", "kg -", f"{f_Fuel:.3f}")
+   print("Maximum Take-Off Weight:", f"{MTOW:.3f}", "kg")
+
 # TLARs:
 from tlars import *
 
@@ -54,12 +61,11 @@ from assumptions import *
 # Parameters:
 f_con = 0.05
 V_CR = M * a_CR # m/
-OE_Mass_regression = 21034 # kg
+OE_Mass_avg = 21034 # kg
+MTOW_avg = 36994 # kg
 
 # Drag:
-C_D0_CR = WettedR * CF_Equi
-e_CR = 1/(AR * pi * psi + 1/phi)
-L_over_D_CR = 1/2 * math.sqrt(pi * AR * e_CR / C_D0_CR)
+#Moved to assumptions.py
 
 # Thrust:
 TSFC = 22 * BR**(-0.19) 
@@ -86,21 +92,35 @@ f_OEMass = OE_Mass / MTOW
 f_payload = maxMTOW_payload / MTOW
 
 # Print and Check Results:
-print("Fuel Mass Fraction: " + f"{f_FuelMass:.3f}" + "\nOperational Empty Mass Fraction: " + f"{f_OEMass:.3f}" + "\nPayload Mass Fraction: " + f"{f_payload:.3f}")
+print_Results(OE_Mass, f_OEMass, maxMTOW_payload, f_payload, Fuel_Mass, f_FuelMass, MTOW)
 check_Mass_Fractions(f_OEMass, f_FuelMass, f_payload)
+
 
 # 2) Masses with Regression Analysis:
 print("\n2) Regression Analysis:")
-f_no_fuel = 1 - f_FuelMass
-MTOW = (OE_Mass_regression + maxMTOW_payload)/f_no_fuel
-Fuel_Mass_reg = MTOW * f_FuelMass
-f_OE_reg = OE_Mass_regression / MTOW
-f_Fuel_reg = Fuel_Mass_reg / MTOW
-f_payload_reg = maxMTOW_payload / MTOW
+MTOW_reg = 2.6154 * maxMTOW_payload + 12273
+OE_Mass_reg = 1.8508 * maxMTOW_payload + 3846.9
+Fuel_Mass_reg = MTOW_reg - (maxMTOW_payload + OE_Mass_reg)
+
+# Mass Fractions:
+f_OE_reg = OE_Mass_reg / MTOW_reg
+f_Fuel_reg = Fuel_Mass_reg / MTOW_reg
+f_payload_reg = maxMTOW_payload / MTOW_reg
 
 # Print and Check Results:
-print("Operational Empty Mass:", OE_Mass_regression, "kg -", f"{f_OE_reg:.3f}")
-print("Design Payload Mass:", maxMTOW_payload , "kg -", f"{f_payload_reg:.3f}")
-print("Fuel Mass:", f"{Fuel_Mass_reg:.3f}", "kg -", f"{f_Fuel_reg:.3f}")
-print("Maximum Take-Off Weight:", f"{MTOW:.3f}", "kg")
+print_Results(OE_Mass_reg, f_OE_reg, maxMTOW_payload, f_payload_reg, Fuel_Mass_reg, f_Fuel_reg, MTOW_reg)
 check_Mass_Fractions(f_OE_reg, f_Fuel_reg, f_payload_reg)
+
+
+# 3) Average Masses:
+print("\n3) Average Masses:")
+Fuel_Mass_avg = MTOW_avg - (maxMTOW_payload + OE_Mass_avg)
+
+# Mass Fractions:
+f_OE_avg = OE_Mass_avg / MTOW_avg
+f_Fuel_avg = Fuel_Mass_avg / MTOW_avg
+f_payload_avg = maxMTOW_payload / MTOW_avg
+
+# Print and Check Results:
+print_Results(OE_Mass_avg, f_OE_avg, maxMTOW_payload, f_payload_avg, Fuel_Mass_avg, f_Fuel_avg, MTOW_avg)
+check_Mass_Fractions(f_OE_avg, f_Fuel_avg, f_payload_avg)
