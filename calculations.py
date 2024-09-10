@@ -62,11 +62,7 @@ for i in range(len(loadings_without0)):
     take[i] = 1.15*getAlphaT(WS)*math.sqrt(WS/(L_TO*kT*rho_TO*g*math.pi*AR*e_TO))
 
 
-def calculations(TOP,loading):
-    result = [i/(TOP*1*1.9) for i in loading]
-    return result
-    #assume sea level takeofftakeoff
-    # taken from raymer
+
 
 #Plot
 plt.title("Matching Diagram")
