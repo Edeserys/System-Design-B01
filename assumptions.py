@@ -35,3 +35,5 @@ L_TO = 1296 # m takeoff field length
 
 # Landing
 landing_field_length= 1210 #m
+rho_L = rho_0
+landing_mass_ratio = 0.7533

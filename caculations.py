@@ -2,6 +2,7 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 
+from assumptions import *
 
 
 loadings = np.linspace(1/1000, 1, 1000)
@@ -72,17 +73,7 @@ def getAlphaT(WS):
 
     return alphaT
 
-
-
-
-def climbgradient(alpha, delta_f, oswald, c_d_0, c_dividedby_v,beta,deployed,engines,cl):
-    new_oswald =oswald+.0026*delta_f
-    new_c_d_0 = c_d_0+0.0013*delta_f+0.0175*(deployed)
-
-    result = 2/engines*beta/alpha*(c_dividedby_v+2*cl/(math.pi*10*new_oswald))
-
-    return result
-
+# Cruise
 def cruise(alpha, oswald,beta,cl,ws):
     result = beta/alpha*(((cl**2)/(math.pi*10*oswald)*(0.5*0.379597*(0.77*296.71)**2)/(beta*ws)+(ws*beta)/(math.pi*10*oswald*0.5*0.379597*(0.77*296.71)**2)))
     return result
@@ -96,12 +87,22 @@ for i in range(75):
     cruise_list.append(value)
 plt.plot(loading_list,cruise_list)
 
+# Climb gradient
+def climbgradient(alpha, delta_f, oswald, c_d_0, c_dividedby_v,beta,deployed,engines,cl):
+    new_oswald =oswald+.0026*delta_f
+    new_c_d_0 = c_d_0+0.0013*delta_f+0.0175*(deployed)
+
+    result = 2/engines*beta/alpha*(c_dividedby_v+2*cl/(math.pi*10*new_oswald))
+
+    return result
+
+
 
 loading_list = []
 climbgradient_list = []
 
 
-
+# Climb gradient take off config
 for j in range(1):
     for r in range(2):
         for i in range(75):
@@ -113,12 +114,12 @@ for j in range(1):
         plt.plot(loading_list,climbgradient_list)
         loading_list.clear()
         climbgradient_list.clear()
-
+# Climb gradient landing config
 for j in range(1):
     for r in range(2):
         for i in range(75):
             loading = 1500+100*i
-            value=climbgradient(getAlphaT(loading),15,0.85,c_d_0,c_dividedby_v,0.94,r,(j+2),1.9)
+            value=climbgradient(getAlphaT(loading),15,0.85,c_d_0,c_dividedby_v,landing_mass_ratio,r,(j+2),1.9)
             loading_list.append(loading)
             climbgradient_list.append(value)
 
@@ -126,6 +127,7 @@ for j in range(1):
         loading_list.clear()
         climbgradient_list.clear()
 
+# Climb gradient cruise config
 for j in range(1):
     for r in range(2):
         for i in range(75):
@@ -160,6 +162,8 @@ P = Psl*pow((1+a*h/Tsl), (-g/a/R))
 rho = P/R/T
 Cl = math.sqrt(CD0*math.pi*AR*e)          #lift coefficient
 
+
+# Climb rate
 WPtab = []
 WStab = []
 

@@ -12,10 +12,10 @@ loadings_without0 = np.arange(1500, 9000, 100)
 cl_landing = 2.6
 
 #Landing limited
-landing_field_length_ws= landing_field_length*1.225*cl_landing/0.94/2/0.45
+landing_field_length_ws= landing_field_length*rho_L*cl_landing/0.94/2/0.45
 
 speed_approach = 70
-speed_approach_ws = (speed_approach/1.23)**2*1.225*2.6/0.94/2
+speed_approach_ws = (speed_approach/1.23)**2*rho_L*2.6/0.94/2
 
 #Cruise wing loading
 cruise_ws =[((0.95/0.19548)*(((0.0232*0.5*0.37597*(0.77*296.71**2))/(0.95*i))
