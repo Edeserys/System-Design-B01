@@ -5,10 +5,14 @@ from assumptions import *
 from constants import *
 from tlars import *
 
-def getAlphaT(WS, p, T, rho, C_L):
+def getAlphaT(WS, p, T, rho, C_L, cruise=False):
     #Velocity and mach
-    V2 = math.sqrt(WS*2/rho/C_L)
-    M2 = V2/math.sqrt(gamma*R*T)
+    if cruise==True:
+        V2 = V_CR
+        M2 = M
+    else:
+        V2 = math.sqrt(WS*2/rho/C_L)
+        M2 = V2/math.sqrt(gamma*R*T)
 
     #Local variables
     Tt = T*(1+(gamma-1)/gamma*M2**2)
@@ -39,14 +43,14 @@ landing_field_length_ws= 1/beta_L*landing_field_length*rho_L*C_L_L/2/C_LFL
 landing_field_length = [landing_field_length_ws for i in range(len(loadings))]
 
 #Approach speed
-speed_approach_ws = (V_app/1.23)**2*rho_L*C_L_L//2
+speed_approach_ws = (V_app/1.23)**2*rho_L*C_L_L//2/beta_L
 speeed_approach_list = [speed_approach_ws for i in range(len(loadings))]
 
 #Cruise wing loading
 cruise = np.zeros(len(loadings_without0))
 for i in range(len(loadings_without0)):
     WS = loadings_without0[i]
-    cruise[i] = beta_cr/getAlphaT(WS, p_CR, T_CR, rho_CR, C_L_CR)*(C_D0_CR*0.5*rho_CR*V_CR**2/(beta_cr*WS)+beta_cr*WS/(math.pi*AR*e_CR*0.5*rho_CR*V_CR**2))
+    cruise[i] = beta_cr/getAlphaT(WS, p_CR, T_CR, rho_CR, C_L_CR, cruise=True)*(C_D0_CR*0.5*rho_CR*V_CR**2/(beta_cr*WS)+beta_cr*WS/(math.pi*AR*e_CR*0.5*rho_CR*V_CR**2))
     
 
 
@@ -78,8 +82,11 @@ climbrate = np.zeros(len(loadings_without0))
 for i in range(len(loadings_without0)):
     WS = loadings_without0[i]
     climbrate[i] = beta_cl/getAlphaT(WS,p_TO, T_TO, rho_TO, C_L_TO)*math.sqrt((CR**2*rho_TO/(beta_cl*WS*2)*math.sqrt(C_D0_TO*pi*AR*e_TO)+4*C_D0_TO/(pi*AR*e_TO)))
-
-
+# OEI
+climbrateOEI = np.zeros(len(loadings_without0))
+for i in range(len(loadings_without0)):
+    WS = loadings_without0[i]
+    climbrateOEI[i] = 2*beta_cl/getAlphaT(WS,p_TO, T_TO, rho_TO, C_L_TO)*math.sqrt((CR**2*rho_TO/(beta_cl*WS*2)*math.sqrt(C_D0_TO*pi*AR*e_TO)+4*C_D0_TO/(pi*AR*e_TO)))
 #Plot
 plt.title("Matching Diagram")
 plt.xlabel("W/S -[N/m2]")
@@ -95,5 +102,6 @@ plt.plot(loadings_without0,climbgradient_cruise_1OEI)
 plt.plot(loadings_without0,climbgradient_landing)
 plt.plot(loadings_without0,climbgradient_landing_1OEI)
 plt.plot(loadings_without0,climbrate)
-plt.legend(["Approach Speed", "Landing Field Length", "Cruise", "Take Off Field Length", "Climb Gradient Takeoff", "Climb Gradient Takeoff OEI", "Climb Gradient Cruise", "Climb Gradient Cruise OEI", "Climb Gradient Landing", "Climb Gradient Landing OEI", "Climb Rate"])
+plt.plot(loadings_without0,climbrateOEI)
+plt.legend(["Approach Speed", "Landing Field Length", "Cruise", "Take Off Field Length", "Climb Gradient Takeoff", "Climb Gradient Takeoff OEI", "Climb Gradient Cruise", "Climb Gradient Cruise OEI", "Climb Gradient Landing", "Climb Gradient Landing OEI", "Climb Rate", "Climb Rate OEI"])
 plt.show()
