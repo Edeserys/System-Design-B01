@@ -28,7 +28,7 @@ def check_Mass_Fractions(f_OE, f_Fuel, f_payload):
    if (f_OE > 0.6):
       print("Operational Empty Mass is way too high!")
    elif (0.5 <= f_OE <= 0.6):
-      print("Fuel Mass is within the bounds of 50 and 60 percent.")
+      print("Operational Empty Mass is within the bounds of 50 and 60 percent.")
    elif (f_OE < 0.6):
       print("Operational Empty Mass is way too little!")
 
