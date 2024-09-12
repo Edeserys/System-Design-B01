@@ -18,7 +18,7 @@ E_spec = 44 # MJ/kg
 t_E = 20 * 60 # s
 R_div = 300 * 1000 # m
 
-C_LFL = 0.6 # pg 133 landing field length coefficient
+C_LFL = 0.45 # pg 133 landing field length coefficient
 
 
 # Aerodynamic characteristics

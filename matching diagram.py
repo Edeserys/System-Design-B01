@@ -70,11 +70,11 @@ def climbgradient(oswald, beta,engines,C_L, c_Grad):
     result = np.zeros(len(loadings_without0))
     for i in range(len(loadings_without0)):
         WS = loadings_without0[i]
-        result[i] = 2/engines*beta/getAlphaT(WS, p_TO, T_TO, rho_TO, C_L)*(cGrad+2*C_L/(math.pi*10*oswald))
+        result[i] = 2/engines*beta/getAlphaT(WS, p_TO, T_TO, rho_TO, C_L)*(c_Grad+2*C_L/(math.pi*10*oswald))
     return result
 
 def designPoint(WS, oswald, beta, engines, C_L, c_Grad):
-    return 2/engines*beta/getAlphaT(WS, p_TO, T_TO, rho_TO, C_L)*(cGrad+2*C_L/(math.pi*10*oswald))
+    return 2/engines*beta/getAlphaT(WS, p_TO, T_TO, rho_TO, C_L)*(c_Grad+2*C_L/(math.pi*10*oswald))
 
 climbgradient_CS25119 = climbgradient(oswald=e_CS25119,beta=beta_cl,engines=2,C_L=C_L_L, c_Grad=c_gradCS25119)
 climbgradient_CS25121a = climbgradient(oswald=e_CS25121a,beta=beta_cl,engines=1,C_L=C_L_TO, c_Grad=c_gradCS25121a)
@@ -103,13 +103,19 @@ plt.plot(loadings_without0,cruise)
 plt.plot(loadings_without0,takeoff)
 plt.plot(loadings_without0,climbgradient_CS25119)
 plt.plot(loadings_without0,climbgradient_CS25121a)
+print(climbgradient_CS25121a)
 plt.plot(loadings_without0,climbgradient_CS25121b)
 plt.plot(loadings_without0,climbgradient_CS25121c)
 plt.plot(loadings_without0,climbgradient_CS25121d)
 plt.plot(loadings_without0,climbrate)
 plt.plot(landing_field_length_ws, ans, 'ro')
+
+plt.title("Matching Diagram", fontsize=14)
+
 print(ans)
+print(landing_field_length_ws)
 # plt.plot(loadings_without0,climbrateOEI)
-plt.legend(["Approach Speed", "Landing Field Length", "Cruise", "Take Off Field Length", "Climb Gradient CS25.119", "Climb Gradient CS25.121A", "Climb Gradient CS25.121B", "Climb Gradient CS25.121C", "Climb Gradient CS25.121D", "Climb Rate"])
+plt.legend(["Approach Speed", "Landing Field Length", "Cruise", "Take Off Field Length", "Climb Gradient CS25.119", "Climb Gradient CS25.121A", "Climb Gradient CS25.121B", "Climb Gradient CS25.121C", "Climb Gradient CS25.121D", "Climb Rate", "Design Point"],loc='upper right', fontsize=13)
+
 plt.show()
 
