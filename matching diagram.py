@@ -35,7 +35,7 @@ def getAlphaT(WS, p, T, rho, C_L, cruise=False):
     return alphaT
 
 loadings = np.linspace(1/1000, 1, 1000)
-loadings_without0 = np.arange(1500, 9000, 100)
+loadings_without0 = np.arange(1500, 9000, 10)
 
 
 #Landing limited
@@ -43,15 +43,19 @@ landing_field_length_ws= 1/beta_L*landing_field_length*rho_L*C_L_L/2/C_LFL
 landing_field_length = [landing_field_length_ws for i in range(len(loadings))]
 
 #Approach speed
-speed_approach_ws = (V_app/1.23)**2*rho_L*C_L_L//2/beta_L
+speed_approach_ws = (V_app/1.23)**2*rho_L*C_L_L/2/beta_L
 speeed_approach_list = [speed_approach_ws for i in range(len(loadings))]
 
 #Cruise wing loading
 cruise = np.zeros(len(loadings_without0))
+def cruisef(alpha, oswald,beta,cl,ws):
+    result = beta/alpha*(((cl**2)/(math.pi*10*oswald)*(0.5*0.379597*(0.77*296.71)**2)/(beta*ws)+(ws*beta)/(math.pi*10*oswald*0.5*0.379597*(0.77*296.71)**2)))
+    return result
+
 for i in range(len(loadings_without0)):
     WS = loadings_without0[i]
     cruise[i] = beta_cr/getAlphaT(WS, p_CR, T_CR, rho_CR, C_L_CR, cruise=True)*(C_D0_CR*0.5*rho_CR*V_CR**2/(beta_cr*WS)+beta_cr*WS/(math.pi*AR*e_CR*0.5*rho_CR*V_CR**2))
-    
+    # cruise[i] = cruisef(getAlphaT(WS, p_CR, T_CR, rho_CR, C_L_CR, cruise=True), e_CR, beta_cr, C_L_CR, WS)
 
 
 #Take off
@@ -62,31 +66,33 @@ for i in range(len(loadings_without0)):
     takeoff[i] = 1.15*getAlphaT(WS, p_TO, T_TO, rho_TO, C_L_TO)*math.sqrt(WS/(L_TO*kT*rho_TO*g*math.pi*AR*e_TO))+4*h2/L_TO
 
 # Climb gradient
-def climbgradient(oswald, beta,engines,C_L):
+def climbgradient(oswald, beta,engines,C_L, c_Grad):
     result = np.zeros(len(loadings_without0))
     for i in range(len(loadings_without0)):
         WS = loadings_without0[i]
-        V = math.sqrt(WS*2/rho_TO/C_L_TO)
-        result[i] = 2/engines*beta/getAlphaT(WS, p_TO, T_TO, rho_TO, C_L)*(CR/V+2*C_L/(math.pi*10*oswald))
+        result[i] = 2/engines*beta/getAlphaT(WS, p_TO, T_TO, rho_TO, C_L)*(cGrad+2*C_L/(math.pi*10*oswald))
     return result
 
-climbgradient_takeoff = climbgradient(oswald=e_TO,beta=beta_cl,engines=2,C_L=C_L_TO)
-climbgradient_takeoff_1OEI = climbgradient(oswald=e_TO,beta=beta_cl,engines=1,C_L=C_L_TO)
-climbgradient_cruise = climbgradient(oswald=e_CR,beta=beta_cr,engines=2,C_L=C_L_CR)
-climbgradient_cruise_1OEI = climbgradient(oswald=e_CR,beta=beta_cr,engines=1,C_L=C_L_CR)
-climbgradient_landing = climbgradient(oswald=e_L,beta=beta_L,engines=2,C_L=C_L_L)
-climbgradient_landing_1OEI = climbgradient(oswald=e_L,beta=beta_L,engines=1,C_L=C_L_L)
+def designPoint(WS, oswald, beta, engines, C_L, c_Grad):
+    return 2/engines*beta/getAlphaT(WS, p_TO, T_TO, rho_TO, C_L)*(cGrad+2*C_L/(math.pi*10*oswald))
 
+climbgradient_CS25119 = climbgradient(oswald=e_CS25119,beta=beta_cl,engines=2,C_L=C_L_L, c_Grad=c_gradCS25119)
+climbgradient_CS25121a = climbgradient(oswald=e_CS25121a,beta=beta_cl,engines=1,C_L=C_L_TO, c_Grad=c_gradCS25121a)
+climbgradient_CS25121b = climbgradient(oswald=e_CS25121b,beta=beta_cl,engines=1,C_L=C_L_TO, c_Grad=c_gradCS25121b)
+climbgradient_CS25121c = climbgradient(oswald=e_CS25121c,beta=beta_cl,engines=1,C_L=C_L_CR, c_Grad=c_gradCS25121c)
+climbgradient_CS25121d = climbgradient(oswald=e_CS25121d,beta=beta_cl,engines=1,C_L=C_L_L, c_Grad=c_gradCS25121d)
+
+ans = designPoint(WS=landing_field_length_ws, oswald=e_CS25121d,beta=beta_cl,engines=1,C_L=C_L_L, c_Grad=c_gradCS25121d)
 # Climb rate
 climbrate = np.zeros(len(loadings_without0))
 for i in range(len(loadings_without0)):
     WS = loadings_without0[i]
-    climbrate[i] = beta_cl/getAlphaT(WS,p_TO, T_TO, rho_TO, C_L_TO)*math.sqrt((CR**2*rho_TO/(beta_cl*WS*2)*math.sqrt(C_D0_TO*pi*AR*e_TO)+4*C_D0_TO/(pi*AR*e_TO)))
+    climbrate[i] = beta_cl/getAlphaT(WS,p_cl, T_cl, rho_cl, C_L_TO)*math.sqrt((CR**2*rho_cl/(beta_cl*WS*2)*math.sqrt(C_D0_TO*pi*AR*e_TO)+4*C_D0_TO/(pi*AR*e_TO)))
 # OEI
 climbrateOEI = np.zeros(len(loadings_without0))
-for i in range(len(loadings_without0)):
-    WS = loadings_without0[i]
-    climbrateOEI[i] = 2*beta_cl/getAlphaT(WS,p_TO, T_TO, rho_TO, C_L_TO)*math.sqrt((CR**2*rho_TO/(beta_cl*WS*2)*math.sqrt(C_D0_TO*pi*AR*e_TO)+4*C_D0_TO/(pi*AR*e_TO)))
+# for i in range(len(loadings_without0)):
+#     WS = loadings_without0[i]
+#     climbrateOEI[i] = 2*beta_cl/getAlphaT(WS,p_TO, T_TO, rho_TO, C_L_TO)*math.sqrt((CR**2*rho_cl/(beta_cl*WS*2)*math.sqrt(C_D0_TO*pi*AR*e_TO)+4*C_D0_TO/(pi*AR*e_TO)))
 #Plot
 plt.title("Matching Diagram")
 plt.xlabel("W/S -[N/m2]")
@@ -95,13 +101,15 @@ plt.plot(speeed_approach_list, loadings)
 plt.plot(landing_field_length, loadings )
 plt.plot(loadings_without0,cruise)
 plt.plot(loadings_without0,takeoff)
-plt.plot(loadings_without0,climbgradient_takeoff)
-plt.plot(loadings_without0,climbgradient_takeoff_1OEI)
-plt.plot(loadings_without0,climbgradient_cruise)
-plt.plot(loadings_without0,climbgradient_cruise_1OEI)
-plt.plot(loadings_without0,climbgradient_landing)
-plt.plot(loadings_without0,climbgradient_landing_1OEI)
+plt.plot(loadings_without0,climbgradient_CS25119)
+plt.plot(loadings_without0,climbgradient_CS25121a)
+plt.plot(loadings_without0,climbgradient_CS25121b)
+plt.plot(loadings_without0,climbgradient_CS25121c)
+plt.plot(loadings_without0,climbgradient_CS25121d)
 plt.plot(loadings_without0,climbrate)
-plt.plot(loadings_without0,climbrateOEI)
-plt.legend(["Approach Speed", "Landing Field Length", "Cruise", "Take Off Field Length", "Climb Gradient Takeoff", "Climb Gradient Takeoff OEI", "Climb Gradient Cruise", "Climb Gradient Cruise OEI", "Climb Gradient Landing", "Climb Gradient Landing OEI", "Climb Rate", "Climb Rate OEI"])
+plt.plot(landing_field_length_ws, ans, 'ro')
+print(ans)
+# plt.plot(loadings_without0,climbrateOEI)
+plt.legend(["Approach Speed", "Landing Field Length", "Cruise", "Take Off Field Length", "Climb Gradient CS25.119", "Climb Gradient CS25.121A", "Climb Gradient CS25.121B", "Climb Gradient CS25.121C", "Climb Gradient CS25.121D", "Climb Rate"])
 plt.show()
+

@@ -48,6 +48,10 @@ L_TO = 1296 # m takeoff field length
 # Climb
 beta_cl = 0.95
 CR = 7.62
+cGrad = 1.8/100
+T_cl = 240.7
+p_cl = 39355
+rho_cl = 0.5696
 
 # Cruise
 beta_cr = 0.95
@@ -70,3 +74,25 @@ rho_L = rho_0
 beta_L = 0.7533 # fuel mass fraction - loiter
 C_L_L = 2.6
 V_app = 70
+
+
+# CS 25.119
+e_CS25119 = e_CR+0.0026*35
+CD0_CS25119 = C_D0_CR+0.0013*35
+c_gradCS25119 = 4.8/100
+# CS 25.121a
+e_CS25121a = e_CR+0.0026*15
+CD0_CS25121a = C_D0_CR+0.0013*15
+c_gradCS25121a = 0.3/100
+# CS 25.121b
+e_CS25121b = e_CR+0.0026*15
+CD0_CS25121b = C_D0_CR+0.0013*15
+c_gradCS25121b = 3.6/100
+# CS 25.121c
+e_CS25121c = e_CR+0.0026*0
+CD0_CS25121c = C_D0_CR+0.0013*0
+c_gradCS25121c = 1.8/100
+# CS 25.121d
+e_CS25121d = e_CR+0.0026*35
+CD0_CS25121d = C_D0_CR+0.0013*35
+c_gradCS25121d = 3.15/100
