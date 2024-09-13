@@ -48,10 +48,6 @@ speeed_approach_list = [speed_approach_ws for i in range(len(loadings))]
 
 #Cruise wing loading
 cruise = np.zeros(len(loadings_without0))
-def cruisef(alpha, oswald,beta,cl,ws):
-    result = beta/alpha*(((cl**2)/(math.pi*10*oswald)*(0.5*0.379597*(0.77*296.71)**2)/(beta*ws)+(ws*beta)/(math.pi*10*oswald*0.5*0.379597*(0.77*296.71)**2)))
-    return result
-
 for i in range(len(loadings_without0)):
     WS = loadings_without0[i]
     cruise[i] = beta_cr/getAlphaT(WS, p_CR, T_CR, rho_CR, C_L_CR, cruise=True)*(C_D0_CR*0.5*rho_CR*V_CR**2/(beta_cr*WS)+beta_cr*WS/(math.pi*AR*e_CR*0.5*rho_CR*V_CR**2))
@@ -103,19 +99,47 @@ plt.plot(loadings_without0,cruise)
 plt.plot(loadings_without0,takeoff)
 plt.plot(loadings_without0,climbgradient_CS25119)
 plt.plot(loadings_without0,climbgradient_CS25121a)
-print(climbgradient_CS25121a)
 plt.plot(loadings_without0,climbgradient_CS25121b)
 plt.plot(loadings_without0,climbgradient_CS25121c)
 plt.plot(loadings_without0,climbgradient_CS25121d)
 plt.plot(loadings_without0,climbrate)
 plt.plot(landing_field_length_ws, ans, 'ro')
 
+#Design Points
+plt.plot(4855.1, 0.35801, marker='o')
+plt.plot(5058.8, 0.34359, marker='o')
+plt.plot(4585.4, 0.37871, marker='o')
+plt.plot(5288.6, 0.34307, marker='o')
+plt.plot(3785.3, 0.3036, marker='o')
+plt.plot(4111.5, 0.2703, marker='o')
+plt.plot(4806.2, 0.3044, marker='o')
+plt.plot(4975.0,0.38192, marker='o')
 plt.title("Matching Diagram", fontsize=14)
 
 print(ans)
 print(landing_field_length_ws)
 # plt.plot(loadings_without0,climbrateOEI)
-plt.legend(["Approach Speed", "Landing Field Length", "Cruise", "Take Off Field Length", "Climb Gradient CS25.119", "Climb Gradient CS25.121A", "Climb Gradient CS25.121B", "Climb Gradient CS25.121C", "Climb Gradient CS25.121D", "Climb Rate", "Design Point"],loc='upper right', fontsize=13)
+plt.legend([
+    "Approach Speed", 
+    "Landing Field Length", 
+    "Cruise", 
+    "Take Off Field Length", 
+    "Climb Gradient CS25.119", 
+    "Climb Gradient CS25.121A", 
+    "Climb Gradient CS25.121B", 
+    "Climb Gradient CS25.121C", 
+    "Climb Gradient CS25.121D", 
+    "Climb Rate", 
+    "Design Point", 
+    "DP Embraer E170", 
+    "DP Embraer E175", 
+    "DP CRJ700", 
+    "DP CRJ900", 
+    "DP F28-2000", 
+    "DP F28-3000", 
+    "DP MRJ70", 
+    "DP ARJ21 700"
+], loc='upper right', fontsize=13)
 
 plt.show()
 
