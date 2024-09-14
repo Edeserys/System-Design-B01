@@ -71,7 +71,7 @@ e_L = e_CR+.0026*delta_f
 
 landing_field_length= 1210 #m
 rho_L = rho_0
-beta_L = 0.94 # fuel mass fraction - loiter
+beta_L = 0.7533 # fuel mass fraction - loiter
 C_L_L = 2.6
 V_app = 70
 
