@@ -4,34 +4,33 @@
 
 # Import Libraries:
 import math
-import WP1
+from assumptions import *
+from constants import *
+from tlars import *
 import os
 
 os.system('cls')
 
-# Constants:
-g = WP1.g
-gamma = WP1.gamma
+
 
 # Aircraft Parameters:
-M_CR = WP1.M
-C_L_CR_max = WP1.C_L_CR
-C_f_avg = WP1.CF_Equi
-MTOW = WP1.MTOW_avg # kg
-V = WP1.V_CR # m/s
-p_CR = 23842.3 # Pa
-rho_CR = 0.3796 # kg/m^3
+M_CR = M
+C_L_CR_max = C_L_CR
+C_f_avg = CF_Equi
+MTOW = maxMTOW_payload # kg
+V = V_CR # m/s
+
+
 
 # Wing Parameters:
-c_r = 5.419 # m
-taper_ratio = 0.316
+c_r = c_root # m
 c_t = c_r * taper_ratio # m
 S_w = 127.2 # m^2
 n = 0.50
 m = 0.25
 sweep_c_over_4_deg = 24 # degrees
 sweep_c_over_4 = math.radians(24)
-sweep_c_over_2 = math.atan(math.tan(sweep_c_over_4) - (4/WP1.AR)*((n - m) * (1 - taper_ratio)/(1 + taper_ratio)))
+sweep_c_over_2 = math.atan(math.tan(sweep_c_over_4) - (4/AR)*((n - m) * (1 - taper_ratio)/(1 + taper_ratio)))
 sweep_c_over_2_deg = math.degrees(sweep_c_over_2)
 
 # Loading and Mass Parameters:

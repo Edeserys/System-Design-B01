@@ -4,7 +4,7 @@ import numpy as np
 from assumptions import *
 from constants import *
 from tlars import *
-from mass estimation import *
+from mass_estimation import *
 
 c_aileron = 0.528
 b_aileron = 3.567
