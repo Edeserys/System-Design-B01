@@ -4,9 +4,7 @@
 
 # Import Libraries:
 import math
-from assumptions import *
 from constants import *
-from tlars import *
 import os
 
 os.system('cls')
@@ -34,7 +32,7 @@ sweep_c_over_2 = math.atan(math.tan(sweep_c_over_4) - (4/AR)*((n - m) * (1 - tap
 sweep_c_over_2_deg = math.degrees(sweep_c_over_2)
 
 # Loading and Mass Parameters:
-W_TO_over_S_w = 5684.396 # N/m^2
+W_TO_over_S_w = WS # N/m^2
 f_landing_mass = 0.7533 # 0% fuel left
 f_mass_begin_CR = f_landing_mass + (1-f_landing_mass) * 0.91 # 91% fuel left
 f_mass_end_CR = f_landing_mass + (1-f_landing_mass) * 0.05 # 5% fuel left
