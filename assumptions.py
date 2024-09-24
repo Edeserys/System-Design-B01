@@ -106,3 +106,14 @@ F28_2000 = [3785.3, 0.3036]
 F28_3000= [4111.5, 0.2703]
 MRJ70 = [4806.2, 0.3044]
 ARJ21_700 = [4975.0,0.38192]
+
+#roll control
+bank_angle = 45
+da_upmax = 24
+da_downmax = 18
+tau = 0.4
+S_ref = 127.2
+b = 35.67
+c_root = 5.419
+taper_ratio = 0.316
+C_la = 1
