@@ -1,9 +1,9 @@
 """Airfoil Selection"""
 # Import Libraries
 # Import and Calculate Parameters:
-    # Aircraft Parameters
-    # Wing Parameters
-    # Loading and Mass Parameters
+    # 1) Aircraft Parameters
+    # 2) Wing Parameters
+    # 3) Loading and Mass Parameters
 # Airfoil Selection Constraints Calculation:
     # 1) Mach Number (M)
     # 2) Reynolds Number (Re)
@@ -22,14 +22,15 @@ os.system('cls')
 g = WP1.g
 gamma = WP1.gamma
 
-# Aircraft Parameters:
+# Parameters:
+# 1) Aircraft Parameters:
 M_CR = WP1.M
 C_L_CR_max = WP1.C_L_CR
 C_f_avg = WP1.CF_Equi
 MTOW = WP1.MTOW_avg # kg
 V = WP1.V_CR # m/s
 
-# Wing Parameters:
+# 2) Wing Parameters:
 c_r = 5.419 # m
 taper_ratio = 0.316
 c_t = c_r * taper_ratio # m
@@ -42,7 +43,7 @@ sweep_c_over_2 = math.atan(math.tan(sweep_c_over_4) - (4/WP1.AR)*((n - m) * (1 -
 sweep_c_over_2_deg = math.degrees(sweep_c_over_2) 
 MAC = 3.887 # m
 
-# Loading and Mass Parameters:
+# 3) Loading and Mass Parameters:
 W_TO_over_S_w = 5684.396 # N/m^2
 f_landing_mass = 0.7533 # 0% fuel left
 f_mass_begin_CR = f_landing_mass + (1-f_landing_mass) * 0.91 # 91% fuel left
