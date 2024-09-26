@@ -50,6 +50,7 @@ f_mass_begin_CR = f_landing_mass + (1-f_landing_mass) * 0.91 # 91% fuel left
 f_mass_end_CR = f_landing_mass + (1-f_landing_mass) * 0.05 # 5% fuel left
 
 # Airfoil Selection Constraints
+print("Airfoil Selection Constraints:")
 # 1) Mach Number:
 print("1) Mach Number (M):")
 print(f"Mach number at cruise: {M_CR}\n")
@@ -102,7 +103,7 @@ print("Step 2: Design Lift Airfoil Coefficient", round(C_l_des,4), "\n")
 
 
 # Summary:
-print("Contraints:")
+print("Constraints:")
 print(f"1. M = {M_CR}")
 print(f"2. Re = {round(Re/(10**6),3)} x 10^6")
 print(f"3. {t_over_c_min} <= t/c <= {t_over_c_max}")
