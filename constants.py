@@ -155,9 +155,9 @@ taper_ratio = 0.316
 C_la = 0.179
 c_d0 = 0.00464
 
-y_aileronstart =  0.8373*b/2
+y_aileronstart =  0.8285*b/2
 y_aileronend = 0.95*b/2
 b_aileron = 2*(y_aileronend - y_aileronstart)
-c_aileronavg = (c_root*(1-(1-taper_ratio)*y_aileronend/(b/2))+c_root*(1-(1-taper_ratio)*y_aileronstart/(b/2)))
+c_aileronavg = 0.3*(c_root*(1-(1-taper_ratio)*y_aileronend/(b/2))+c_root*(1-(1-taper_ratio)*y_aileronstart/(b/2)))/2
 S_aileron = c_aileronavg*b_aileron
 da_max = 0.5*(da_upmax+da_downmax)

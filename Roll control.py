@@ -16,4 +16,6 @@ P = -(c_lda)/(c_lp)*da_max*(2*V_CR/b)
 
 dt = bank_angle/P
 
-print(dt)
+print('dt',dt)
+print('Aileron start and end',y_aileronstart, y_aileronend)
+print('Aileron span, chord and surface area',b_aileron,c_aileronavg,S_aileron)
