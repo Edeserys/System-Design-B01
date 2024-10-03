@@ -52,20 +52,8 @@ def print_Results(OE, f_OE, payload, f_payload, Fuel, f_Fuel, MTOW):
    print("Fuel Mass:", f"{Fuel:.3f}", "kg -", f"{f_Fuel:.3f}")
    print("Maximum Take-Off Weight:", f"{MTOW:.3f}", "kg")
 
-# TLARs:
-from tlars import *
 
-# Assumptions:
-from assumptions import *
 
-# Parameters:
-f_con = 0.05
-V_CR = M * a_CR # m/
-OE_Mass_avg = 21034 # kg
-MTOW_avg = 36994 # kg
-
-# Drag:
-#Moved to assumptions.py
 
 # Thrust:
 TSFC = 22 * BR**(-0.19) 

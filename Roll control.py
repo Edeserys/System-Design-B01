@@ -1,8 +1,8 @@
 import math
 import matplotlib.pyplot as plt
 import numpy as np
-from SYSTEM-Design-B01.WP1.mass_estimation import *
-from constants.constants import *
+from mass_estimation import *
+from constants import *
 
 
 

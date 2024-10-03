@@ -1,9 +1,8 @@
 import math
 import matplotlib.pyplot as plt
 import numpy as np
-from assumptions import *
 from constants import *
-from tlars import *
+
 
 def getAlphaT(WS, p, T, rho, C_L, cruise=False):
     #Velocity and mach
