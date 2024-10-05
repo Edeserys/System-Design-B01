@@ -6,8 +6,8 @@
 # Initial Conditions
 # Store Variables for 2 Graphs
 # Mach-to-Pressure-Coefficient Graphs
-    # 1) First Graph Loop (M>=0)
-    # 2) Second Graph Loop (M>=0.3)
+    # 1) First Graph Loop (0<=M<=0.9)
+    # 2) Second Graph Loop (0.3<=M<=0.9)
 # Finding the Critical Point
 # Printing the Critical Point
 # Plotting Graphs
@@ -44,7 +44,7 @@ M_crittab = [M_inf]
 C_p_crittab = [C_p_crit]
 
 # Mach-to-Pressure-Coefficients Graphs:
-# 1) Loop for First Graph M>=0:
+# 1) Loop for First Graph 0<=M<=0.9:
 while M_0 < 0.9:
     M_0 += dM
     C_p_min = C_p0_min / math.sqrt(1-M_0**2)
@@ -52,7 +52,7 @@ while M_0 < 0.9:
     M_0tab.append(M_0)
     C_p0tab.append(C_p_min)
 
-# 2) Loop for Second Graph M>=0.3:
+# 2) Loop for Second Graph 0.3<=M<=0.9:
 while M_inf < 0.9:
     M_inf += dM
     C_p_crit = Find_C_p_crit(M_inf)
