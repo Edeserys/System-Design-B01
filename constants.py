@@ -49,7 +49,7 @@ C_LFL = 0.45 # pg 133 landing field length coefficient
 
 # Aerodynamic characteristics
 C_D0_CR = WettedR * CF_Equi
-e_CR = 1/(AR * pi * psi + 1/phi)
+e_CR = 0.727
 L_over_D_CR = 1/2 * math.sqrt(pi * AR * e_CR / C_D0_CR)
 c_dividedby_v = 0.024
 
@@ -81,10 +81,11 @@ rho_cl = 0.5696
 
 # Cruise
 beta_cr = 0.95
-C_L_CR = 1.7
+C_L_CR = 0.5745
 T_CR = 218.808 # K, ISA 
 a_CR = math.sqrt(gamma * R * T_CR)
 V_CR = M * a_CR
+print(V_CR)
 p_CR = 23842
 rho_CR = 0.3796
 
@@ -103,7 +104,7 @@ e_L = e_CR+.0026*delta_f
 landing_field_length= 1210 #m
 rho_L = rho_0
 beta_L = 0.7533 # fuel mass fraction - loiter
-C_L_L = 2.6
+C_L_L = 1.8942
 V_app = 70
 
 

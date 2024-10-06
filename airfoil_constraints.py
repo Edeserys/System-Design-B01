@@ -13,22 +13,22 @@
 
 # Import Libraries:
 import math
-import WP1
 import os
+from constants import *
 
 os.system('cls')
 
 # Constants:
-g = WP1.g
-gamma = WP1.gamma
+g =g
+gamma = gamma
 
 # Parameters:
 # 1) Aircraft Parameters:
-M_CR = WP1.M
-C_L_CR_max = WP1.C_L_CR
-C_f_avg = WP1.CF_Equi
-MTOW = WP1.MTOW_avg # kg
-V = WP1.V_CR # m/s
+M_CR = M
+C_L_CR_max = C_L_CR
+C_f_avg = CF_Equi
+MTOW = MTOW_avg # kg
+V = V_CR # m/s
 
 # 2) Wing Parameters:
 c_r = 5.419 # m

@@ -77,7 +77,7 @@ climbgradient_CS25121b = climbgradient(oswald=e_CS25121b,beta=beta_cl,engines=1,
 climbgradient_CS25121c = climbgradient(oswald=e_CS25121c,beta=beta_cl,engines=1,C_L=C_L_CR, c_Grad=c_gradCS25121c)
 climbgradient_CS25121d = climbgradient(oswald=e_CS25121d,beta=beta_cl,engines=1,C_L=C_L_L, c_Grad=c_gradCS25121d)
 
-ans = designPoint(WS=landing_field_length_ws, oswald=e_CS25121d,beta=beta_cl,engines=1,C_L=C_L_L, c_Grad=c_gradCS25121d)
+ans = designPoint(WS=landing_field_length_ws, oswald=e_CS25121b,beta=beta_cl,engines=1,C_L=C_L_TO, c_Grad=c_gradCS25121d)
 # Climb rate
 climbrate = np.zeros(len(loadings_without0))
 for i in range(len(loadings_without0)):
