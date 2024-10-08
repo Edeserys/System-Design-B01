@@ -32,7 +32,7 @@ ZeroPayload_R = 2963 * 1000 # m
 # Assumptions:
 AR = 10
 WettedR = 6
-BR = 7 # Bypass Ratio [1-15]
+BR = 5 # Bypass Ratio [1-15]
 Wetted_Area = 2000 # m^2
 CF_Equi = 0.0031 # page 105
 phi = 0.97 # page 106
@@ -48,7 +48,7 @@ C_LFL = 0.45 # pg 133 landing field length coefficient
 
 
 # Aerodynamic characteristics
-C_D0_CR = WettedR * CF_Equi
+C_D0_CR = 0.0156
 e_CR = 0.727
 L_over_D_CR = 1/2 * math.sqrt(pi * AR * e_CR / C_D0_CR)
 c_dividedby_v = 0.024
@@ -59,11 +59,11 @@ T_0 = 288.15 # K
 p_0 = 101325 # Pa
 
 # Takeoff
-delta_f = 35
+delta_f = 24
 
 C_D0_TO = C_D0_CR+0.0013*delta_f
 e_TO = e_CR+.0026*delta_f
-C_L_TO = 1.9
+C_L_TO = 1.48
 h2 = 15.24 # m 50ft
 
 rho_TO = rho_0
@@ -85,7 +85,6 @@ C_L_CR = 0.5745
 T_CR = 218.808 # K, ISA 
 a_CR = math.sqrt(gamma * R * T_CR)
 V_CR = M * a_CR
-print(V_CR)
 p_CR = 23842
 rho_CR = 0.3796
 
@@ -95,7 +94,7 @@ OE_Mass_avg = 21034 # kg
 MTOW_avg = 36994 # kg
 
 # Landing
-delta_f = 20
+delta_f = 40
 
 C_D0_L = C_D0_CR+0.0013*delta_f
 e_L = e_CR+.0026*delta_f
@@ -104,7 +103,7 @@ e_L = e_CR+.0026*delta_f
 landing_field_length= 1210 #m
 rho_L = rho_0
 beta_L = 0.7533 # fuel mass fraction - loiter
-C_L_L = 1.8942
+C_L_L = 1.93
 V_app = 70
 
 
