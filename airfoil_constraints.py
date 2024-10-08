@@ -13,24 +13,26 @@
 
 # Import Libraries:
 import math
+import WP1
 import os
-from constants import *
 
 os.system('cls')
 
 # Constants:
-g =g
-gamma = gamma
+g = WP1.g
+gamma = WP1.gamma
+R = WP1.R
 
 # Parameters:
 # 1) Aircraft Parameters:
-M_CR = M
-C_L_CR_max = C_L_CR
-C_f_avg = CF_Equi
-MTOW = MTOW_avg # kg
-V = V_CR # m/s
+M_CR = WP1.M
+C_L_CR_max = WP1.C_L_CR
+C_f_avg = WP1.CF_Equi
+MTOW = WP1.MTOW_avg # kg
+V = WP1.V_CR # m/s
 
 # 2) Wing Parameters:
+b = 35.67 # m
 c_r = 5.419 # m
 taper_ratio = 0.316
 c_t = c_r * taper_ratio # m
@@ -41,6 +43,8 @@ sweep_c_over_4_deg = 24 # degrees
 sweep_c_over_4 = math.radians(24)
 sweep_c_over_2 = math.atan(math.tan(sweep_c_over_4) - (4/WP1.AR)*((n - m) * (1 - taper_ratio)/(1 + taper_ratio)))
 sweep_c_over_2_deg = math.degrees(sweep_c_over_2) 
+sweep_LE = math.atan(math.tan(sweep_c_over_4)+c_r/(2*b)*(1-taper_ratio))
+sweep_LE_deg = math.degrees(sweep_LE)
 MAC = 3.887 # m
 
 # 3) Loading and Mass Parameters:
@@ -68,6 +72,7 @@ print(f"Dynamic Viscosity: {round(mu,8)} N.s/m^2")
 # Reynolds Number:
 c = MAC
 Re = rho_CR * V * c / mu
+#Re = rho_CR * 0.70343 * math.sqrt(gamma*R*218.81) * c / mu
 print(f"Reynolds number: {round(Re/(10**6),3)} x 10^6\n")
 
 
@@ -98,8 +103,8 @@ C_L_des = 1.1 / q * (1/2 * (MTOW*f_mass_begin_CR*g / S_w + MTOW*f_mass_end_CR*g 
 print("Step 1: Design Lift Wing Coefficient", round(C_L_des,4))
 
 # Airfoil Coefficient:
-C_l_des = q * C_L_des / (1/2*rho_CR*(V*math.cos(sweep_c_over_4))**2)
-print("Step 2: Design Lift Airfoil Coefficient", round(C_l_des,4), "\n")
+C_l_des = C_L_des / (math.cos(sweep_LE)**2)
+print("Step 2: Design Lift Airfoil Coefficient", round(C_l_des,3), "\n")
 
 
 # Summary:
@@ -107,4 +112,4 @@ print("Constraints:")
 print(f"1. M = {M_CR}")
 print(f"2. Re = {round(Re/(10**6),3)} x 10^6")
 print(f"3. {t_over_c_min} <= t/c <= {t_over_c_max}")
-print("4. C_{l_{des}} =", f"{round(C_l_des,4)}")
+print("4. C_{l_{des}} =", f"{round(C_l_des,3)}")
