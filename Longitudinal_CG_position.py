@@ -7,7 +7,6 @@
     # 2) 2D Array --> x-position (X_j)
     # 3) Separate for readability
 # Parameters
-# ?
 # Selection of Engines
     # 1) Fuselage-Mounted
     # 2) Wing-Mounted
@@ -51,22 +50,7 @@ def Separate():
     print("---------------------------------------------------")
 
 # Parameters:
-MTOM = WP1.MTOW # kg
-MTOW = g * MTOM # N
-N_mw = np.ceil(MTOW/120000 /4) * 4 # Number of Main Gear Wheels 
-N_nw = 2 # Number of Nose Gear Wheels
 MAC = 3.197 # m
-
-# Number of Main Gear Struts:
-N_str = 0
-if N_mw <= 12:
-    N_str = 2
-else:
-    rnd = random.randint(0,1) # In theory it is not random, but this case will not be investigated
-    if rnd == 0:
-        N_str = 3
-    else:
-        N_str = 4
 
 # Selection of Fuselage-Mounted Engines or Wing-Mounted Engines
 sw = True
@@ -76,7 +60,7 @@ while sw:
     if choice == 1:
         Wing_Group_Components = ["Wing"]
         sw = False
-    if choice == 2:
+    elif choice == 2:
         Wing_Group_Components = ["Wing"]
         Wing_Group_Components.append("Nacelle")
         Wing_Group_Components.append("Propulsion")
