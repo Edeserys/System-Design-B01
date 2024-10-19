@@ -6,7 +6,6 @@ from constants import *
 
 def getAlphaT(WS, p, T, rho, C_L, cruise=False):
     #Velocity and mach
-    BR = 7
     if cruise==True:
         V2 = V_CR
         M2 = M
