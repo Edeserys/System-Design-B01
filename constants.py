@@ -32,7 +32,7 @@ ZeroPayload_R = 2963 * 1000 # m
 # Assumptions:
 AR = 10
 WettedR = 6
-BR = 5 # Bypass Ratio [1-15]
+BR = 12 # Bypass Ratio [1-15]
 Wetted_Area = 2000 # m^2
 CF_Equi = 0.0031 # page 105
 phi = 0.97 # page 106
