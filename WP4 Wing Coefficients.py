@@ -123,12 +123,17 @@ def c_y(y):
 # 1)
 def f_CL_y(y, f):
     return f(y)
+def f_CM_y(y, h):
+    return h(y)
 # 2)
 # The Method takes a certain y-Span (y), the Desired Lift Coefficient (CLd), and the Lift Coefficient Functions at alpha = 0 and 10 [deg] (f0 and f10)
 # The Method gives the Desired Lift Coefficient (CLd_y) at the chosen y_Span (y)
 def desired_CL(y, CLd, f0, f10):
     CLd_y = f_CL_y(y, f0) + (CLd - CL0)/(CL10 - CL0) * (f_CL_y(y, f10) - f_CL_y(y, f0))
     return CLd_y
+def desired_CM(y, CMd, h0, h10):
+    CMd_y = f_CM_y(y, h0) + (CMd - CM0)/(CM10 - CM0) * (f_CM_y(y, h10) - f_CM_y(y, h0))
+    return CMd_y
 # 3)
 # The Method takes a certain y-Span (y) and a Lift Coefficient Function (func = Cl(y))
 # The Method gives the Lift (L_y) at the chosen y_Span (y)
@@ -177,9 +182,18 @@ f10, g10, h10 = ComputeCurves(data2)
 # Find Desired Lift Coefficient (CLd):
 CL0 = 0.216104
 CL10 = 1.074117
-CLd = 1.5 # change later!
+CLd = np.array([[2.0294, 0.90232], 
+       [-2.029071, -0.6394]
+       ])
+CM0 = -0.283955
+CM10 = -1.29754
+CMd = -0.5
 #print(desired_CL(9.4537, CLd, f0, f10))
 
 # Desired Angle of Attack (alpha_d): 
-alpha_d = (CLd - CL0)/(CL10 - CL0)*10 # [deg]
+alpha_d = np.zeros((2,2))
+
+for i in range(2):
+    for j in range(2):
+        alpha_d[i,j] = (CLd[i,j] - CL0)/(CL10 - CL0)*10 # [deg]
 print(alpha_d)
