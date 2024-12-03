@@ -68,7 +68,11 @@ def ComputeCurves(data):
     Extrapolated_f_values(f, ftab)
 
     # Plot:
+    plt.subplots_adjust(hspace=1)
     plt.subplot(311)
+    plt.title("Lift Distribution over the Wingspan")
+    plt.xlabel("y-span, [m]")
+    plt.ylabel("CL, [-]")
     plt.plot(ytab, ftab)
     plt.plot(ylst, Cllst)
 
@@ -80,6 +84,9 @@ def ComputeCurves(data):
 
     # Plot:
     plt.subplot(312)
+    plt.title("Drag Distribution over the Wingspan")
+    plt.xlabel("y-span, [m]")
+    plt.ylabel("CD, [-]")
     plt.plot(ytab, gtab)
     plt.plot(ylst, Cdlst)
 
@@ -92,6 +99,9 @@ def ComputeCurves(data):
 
     # Plot:
     plt.subplot(313)
+    plt.title("Moment Distribution over the Wingspan")
+    plt.xlabel("y-span, [m]")
+    plt.ylabel("CM, [-]")
     plt.plot(ytab, htab)
     plt.plot(ylst, Cmlst)
     plt.show()
@@ -196,4 +206,4 @@ alpha_d = np.zeros((2,2))
 for i in range(2):
     for j in range(2):
         alpha_d[i,j] = (CLd[i,j] - CL0)/(CL10 - CL0)*10 # [deg]
-print(alpha_d)
+print(f"Alpha 1: {alpha_d[0,1]} \nAlpha 2: {alpha_d[1,1]}")
