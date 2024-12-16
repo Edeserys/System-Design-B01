@@ -29,8 +29,14 @@ ZeroPayload_R = 2963 * 1000 # m
 
 
 
-# Assumptions:
-AR = 10
+'''Aircraft characteristics'''
+b = 29.28 # m
+S = 85.75 # m^2
+AR = b**2/S
+C_R = 4.45 # m
+C_T = 1.45 # m
+taper_ratio = C_T/C_R
+
 WettedR = 6
 BR = 12 # Bypass Ratio [1-15]
 Wetted_Area = 2000 # m^2
@@ -47,7 +53,7 @@ C_LFL = 0.45 # pg 133 landing field length coefficient
 
 
 
-# Aerodynamic characteristics
+'''Aerodynamic characteristics'''
 C_D0_CR = 0.0156
 e_CR = 0.727
 L_over_D_CR = 1/2 * math.sqrt(pi * AR * e_CR / C_D0_CR)
@@ -106,7 +112,7 @@ beta_L = 0.7533 # fuel mass fraction - loiter
 C_L_L = 1.93
 V_app = 70
 
-
+'''Matching diagram requirements'''
 # CS 25.119
 e_CS25119 = e_CR+0.0026*35
 CD0_CS25119 = C_D0_CR+0.0013*35
@@ -149,15 +155,12 @@ da_upmax = 24
 da_downmax = 18
 tau = 0.51
 S_ref_ail = 1
-b = 35.67
-c_root = 5.419
-taper_ratio = 0.316
 C_la = 0.179
 c_d0 = 0.00464
 
 y_aileronstart =  0.8285*b/2
 y_aileronend = 0.95*b/2
 b_aileron = 2*(y_aileronend - y_aileronstart)
-c_aileronavg = 0.3*(c_root*(1-(1-taper_ratio)*y_aileronend/(b/2))+c_root*(1-(1-taper_ratio)*y_aileronstart/(b/2)))/2
+c_aileronavg = 0.3*(C_R*(1-(1-taper_ratio)*y_aileronend/(b/2))+C_R*(1-(1-taper_ratio)*y_aileronstart/(b/2)))/2
 S_aileron = c_aileronavg*b_aileron
 da_max = 0.5*(da_upmax+da_downmax)

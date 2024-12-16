@@ -21,7 +21,7 @@
 
 # Import Libraries:
 import os
-import WP1
+import constants as WP1
 import numpy as np
 import random
 

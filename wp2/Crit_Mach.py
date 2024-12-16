@@ -13,15 +13,16 @@
 # Plotting Graphs
 
 # Import Libraries
-import WP1
+import wp1.mass_estimation 
 import math
 import os
 import matplotlib.pyplot as plt
+from constants import *
 
 os.system('cls')
 
 # Constants:
-gamma = WP1.gamma
+
 
 # Method for Finding Points of Graph 
 # for Critical Pressure Coefficient (C_p_crit):
