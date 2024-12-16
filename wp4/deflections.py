@@ -1,11 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from  wp4.areaMoments import *
+from constants import *
 
 
-b= 29.64 #m
-E = 72.4*10**9 #Pa
-G = 28*10**9 #Pa
+
 
 
 def read_Moment_data(filename):

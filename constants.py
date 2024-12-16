@@ -10,6 +10,10 @@ gamma = 1.4
 R = 287
 g = 9.81 # m/s^2
 
+'''Material Properties'''
+E = 72.4*10**9 #Pa
+G = 28*10**9 #Pa
+nu = 1/3
 # TLARs:
 # 1) Not Full Fuel
 max_payload = 9302 # kg

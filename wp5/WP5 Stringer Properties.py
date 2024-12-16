@@ -16,19 +16,20 @@
 # Import Libraries
 import os
 import math
+from cases import *
+from constants import *
 
 # Clear Console:
 os.system('cls')
 
 # Parameters:
-case = 0
-b = 29.28 #m
-c_r = 4.45 #m
-c_t = 1.406 #m
-nu = 1/3 
+t, c = casesWP4(0)
+
+c_r = C_R
+c_t = C_T #m
 k_c = 7
 n_ribs = 10
-E = 72.4*10**9 #Pa
+
 
 
 # Methods:
