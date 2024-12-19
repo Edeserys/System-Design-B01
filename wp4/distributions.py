@@ -1,5 +1,12 @@
+import os
+import math
+import sys
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.join(current_dir, '..')
+sys.path.append(parent_dir)
+
 from scipy.interpolate import interp1d
-from get_distribution import f_L,f_D,f_M,f_W
+from wp4.get_distribution import f_L,f_D,f_M,f_W
 
 '''Distributions'''
 lift_distribution = f_L

@@ -1,6 +1,14 @@
+import os
+import math
+import sys
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.join(current_dir, '..')
+sys.path.append(parent_dir)
+
 import numpy as np
 import matplotlib.pyplot as plt
-from  wp4.areaMoments import *
+import csv
+import wp4.areaMoments as am
 from constants import *
 
 
@@ -40,12 +48,13 @@ def read_Torque_data(filename):
     return np.array(T)
 
 
-Ixx1 = Ixx(h1, h2, L, t)
-J1 = J(h1, h2, L, t)
+Ixx1 = am.Ixx1
+J1 = am.J1
 
 
 y_vals, M = read_Moment_data('wp4/momentPos.csv')
 y_vals, M2 = read_Moment_data2('wp4/momentNeg.csv')
+M2[-1]=0
 T = read_Torque_data('wp4/TorquePos.csv')
 T2 = read_Torque_data('wp4/TorqueNeg.csv')
 

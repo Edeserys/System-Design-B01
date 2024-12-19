@@ -1,8 +1,15 @@
+import os
+import math
+import sys
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.join(current_dir, '..')
+sys.path.append(parent_dir)
+
 import scipy as sp
 from scipy.interpolate import interp1d
 import math
 from scipy import integrate
-from distributions import *
+from wp4.distributions import *
 from matplotlib import pyplot as plt
 import csv
 from constants import *

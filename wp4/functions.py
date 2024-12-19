@@ -1,8 +1,15 @@
+import os
+import math
+import sys
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.join(current_dir, '..')
+sys.path.append(parent_dir)
+
 '''Modules'''
 from scipy import integrate
 import scipy as sp
-from distributions import *
-from main import *
+from wp4.distributions import *
+from wp4.main import *
 import math
 import matplotlib as plt
 

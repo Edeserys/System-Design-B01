@@ -1,7 +1,16 @@
+import os
+import math
+import sys
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.join(current_dir, '..')
+sys.path.append(parent_dir)
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 from math import pi
 from wp4.airfoildata import *
+from cases import *
 
 '''Definition of Geometry'''
 # Define the given functions
@@ -9,8 +18,7 @@ A= 500*10**-6 #Area of stringer
 sp1 = 0.2
 sp2 = 0.7
 
-c = 4 # Stringer number
-t=0.008#thickness
+t, c = casesWP4(0) #Thickness and chord length
 
 
 
@@ -87,7 +95,8 @@ def J(h1,h2,L,t):
     
     return 4*As**2/(s/t)+2*(Ibottomst+Itopst)
 
-
+Ixx1 = Ixx(h1,h2,L,t)
+J1 = J(h1,h2,L,t)
 
 # # # Plot the functions
 # # # plt.figure(figsize=(12, 8))

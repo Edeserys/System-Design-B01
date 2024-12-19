@@ -1,4 +1,10 @@
 '''For a given position in the airfoil, spar length is given for c=1'''
+import os
+import math
+import sys
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.join(current_dir, '..')
+sys.path.append(parent_dir)
 
 import csv
 

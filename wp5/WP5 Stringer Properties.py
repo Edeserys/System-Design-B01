@@ -16,19 +16,37 @@
 # Import Libraries
 import os
 import math
+import sys
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.join(current_dir, '..')
+sys.path.append(parent_dir)
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+import wp5.yld as yld
 from cases import *
-from constants import *
+import wp4.areaMoments as am
+import wp4.deflections as defl
+import constants
 
 # Clear Console:
 os.system('cls')
 
+# Constants:
+nu = constants.nu
+c_r = constants.C_R #m
+c_t = constants.C_T #m
+E = constants.E #Pa
+b = constants.b #m
+
 # Parameters:
 t, c = casesWP4(0)
-
-c_r = C_R
-c_t = C_T #m
 k_c = 7
 n_ribs = 10
+b_spar = b / 2 / n_ribs #m
+
+
 
 
 
@@ -43,14 +61,14 @@ def c_y(y):
 def skinProperties(case, y):
     if case == 0:
         t_skin = 0.008 #m
-        L_skin = 0.2509 * c_y(y) #m 
+        b_skin = 0.2509/(20/4) * c_y(y) #m 
     elif case == 1:
         t_skin = 0.004 #m
-        L_skin = 0.1* c_y(y) #m
+        b_skin = 0.1/(35/10)* c_y(y) #m
     else: 
         t_skin = 0.002 #m
-        L_skin = 0.0625  * c_y(y) #m
-    return L_skin, t_skin
+        b_skin = 0.0625/(50/16)  * c_y(y) #m
+    return b_skin, t_skin
 
 # The Method takes the Length of a Stringer (L_str)
 # The Method gives the Thickness of a Stringer (t_str)
@@ -89,20 +107,32 @@ def columnBuckling(L1, K, E, L, A):
     return sigma_cr
 
 # The Method takes the thickness (t) and the length (L)
-# The Method gives the thickness-to-length ratio (t/b)
-def t_over_b(t, L):
-    t_over_b = t/L
-    return t_over_b
 
 # The Method takes the skin buckling coefficient (k_c), the Elastic Modulus (E), the skin thickness (t) and the length (L)
 # The Method gives the Critical Skin Buckling Stress (sigma_cr)
-def skinBuckling(k_c, E, t_skin, L_skin):
-    sigma_cr = (math.pi**2 * k_c * E) / (12+(1-nu**2)) * t_over_b(t_skin, L_skin)**2
+def skinBuckling(k_c, E, t_skin, b_skin, nu=1/3):
+    sigma_cr = (math.pi**2 * k_c * E) / (12+(1-nu**2)) * (t_skin/b_skin)**2
     return sigma_cr
 
 
 # Print Area Moment of Inertia (Ixx) and Critical Column and Skin Buckling Stress:
 print(f"{Ixx(40*10**-3)*10**16} mm^4") 
-L_skin, t_skin = skinProperties(2, 0)
-print(f"{columnBuckling(40*10**-3, 4, E, b/(2*n_ribs), 500*10**-6+L_skin*t_skin)*10**-6} [MPa]")
-print(f"{skinBuckling(k_c, E, t_skin, L_skin)*10**-6} [MPa]")
+b_skin, t_skin = skinProperties(2, np.linspace(0, b/2, 146))
+# print(f"{columnBuckling(40*10**-3, 4, E, b/(2*n_ribs), 500*10**-6+b_skin*t_skin)*10**-6} [MPa]")
+# print(f"{skinBuckling(k_c, E, t_skin, b_skin)*10**-6} [MPa]")
+
+M = defl.M
+Ixx1 = am.Ixx1
+D_total = am.D_total
+h1 = am.h1
+
+stress = yld.yieldCalc(M, Ixx1, -(D_total-h1))
+
+safety = yld.safetyFactor(stress, skinBuckling(k_c, E, t_skin, b_skin))
+# safety[-1]=0
+# safety[-2]=0
+
+plt.plot(np.linspace(0, b/2, 146),  yld.safetyFactor(stress, skinBuckling(k_c, E, t_skin, b_skin)), label="Stress")
+plt.plot(np.linspace(0, b/2, 146), yld.safetyFactor(stress, columnBuckling(40*10**-3, 4, E, b/(2*n_ribs), 500*10**-6+b_skin*t_skin)), label="Stress")
+plt.ylim(0, 15)
+plt.show()
