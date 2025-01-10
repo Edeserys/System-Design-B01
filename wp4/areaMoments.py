@@ -53,16 +53,45 @@ A2= (L-2*t)*alpha + gamma * (L-2*t) * 0.5
 D_total=(D*A1-D2*A2)/(A1-A2)
 
 
-def Ixx(h1,h2,L,t):
+#Spar placement
+spar = np.full(146, False)
+spar[[0, 11, 22, 28, 36, 41, 50, 59, 67, 74, 82, 89, 95, 101, 107, 113, 
+      118, 123, 128, 132, 136, 140, 142, 145]] = True
+
+# Indices where 'spar' is True
+true_indices = np.where(spar)[0]
+
+# Initialize distances array (same length as spar)
+sparDistances = np.zeros_like(spar, dtype=float)
+
+# Go through consecutive pairs of True indices:
+# (i0, i1), (i1, i2), (i2, i3), ...
+for start_idx, end_idx in zip(true_indices[:-1], true_indices[1:]):
+    dist = (end_idx - start_idx) * 0.1
+    # Fill from start_idx up to and *including* end_idx
+    sparDistances[start_idx : end_idx+1] = dist
+
+sparDistancesResult = sparDistances
+
+
+def Ixx(h1,h2,L,t, spar):
     '''2nd Moment of Area around X axis'''
       
 
-    Ixxxr =  L*1/12*h2**3 + (L*(h2)* (D-h2/2)**2 ) + L*(h1-h2)**3/36 + (0.5*L*(h1-h2))*(D-(h1-2/3*h2))**2 
-    - (   (L-2*t)*alpha**3/12 +  alpha * (L-2*t)* (D2-alpha/2)**2 + (L-2*t)/36*gamma**3 + 0.5*gamma*(L-2*t) * (D2-(alpha+gamma/3))**2 )
+#     Ixxxr1 = L*1/12*h2**3 + (L*(h2)*(D−h2/2)**2)+L*(h1−h2)**3/36 + (0.5*L*(h1−h2))*(D−(h1−2/3*h2))**2+((L−2*t)* alpha **3/12 + alpha * ( L−2* t ) * (D2−alpha /2) **2 + ( L−2* t ) /36*gamma
+# **3 + 0 . 5 *gamma* ( L−2* t ) * (D2−( alpha+gamma/3) ) **2 )
+#     # Ixxxr2 = L*1/12*h2**3 + (L*(h2)* (D-h2/2)**2 ) + L*(h1-h2)**3/36 + (0.5*L*(h1-h2))*(D-(h1-2/3*h2))**2 
 
 
-        
+    Ixxxr1 = L*h1**3/12 - (L-2*t)*(h1-2*t)**3/12
+    Ixxxr2 = L*h1**3/12 
+    # print(Ixxxr1[1])
+    # print(Ixxxr2[1])
+    Ixxxr = np.where(spar, Ixxxr2, Ixxxr1)
+
+
     Ibottomst= c/2*A*D_total**2
+    # print(Ixxxr2)
 
     dtop = 0
     for i in range(int(c/2)):
@@ -95,14 +124,14 @@ def J(h1,h2,L,t):
     
     return 4*As**2/(s/t)+2*(Ibottomst+Itopst)
 
-Ixx1 = Ixx(h1,h2,L,t)
+Ixx1 = Ixx(h1,h2,L,t,spar)
 J1 = J(h1,h2,L,t)
 
 # # # Plot the functions
-# # # plt.figure(figsize=(12, 8))
-# # # plt.subplot(1, 2, 1)
-# # # plt.title("Span wise 2nd Moment of Area around X axis")
-# plt.plot(np.linspace(0,29.28/2, 146), Ixx(h1,h2,L,t), label="Ixx(y)")
+# # plt.figure(figsize=(12, 8))
+# # plt.subplot(1, 2, 1)
+# # plt.title("Span wise 2nd Moment of Area around X axis")
+# plt.plot(np.linspace(0,29.28/2, 146), Ixx(h1,h2,L,t, spar), label="Ixx(y)")
 # plt.xlabel("Span-Wise position [m]", fontsize=12)
 # plt.ylabel("Ixx(y)", fontsize=12)
 # plt.legend()

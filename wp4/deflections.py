@@ -19,23 +19,14 @@ def read_Moment_data(filename):
     with open(filename, 'r', encoding='utf-8-sig') as csvfile:
         reader = csv.reader(csvfile)
         y = []
+        V = []
         M = []
         for row in reader:
             y.append(float(row[0]))
+            V.append(float(row[2]))
             M.append(float(row[3]))
 
-    return np.array(y), np.array(M)
-
-def read_Moment_data2(filename):
-    with open(filename, 'r', encoding='utf-8-sig') as csvfile:
-        reader = csv.reader(csvfile)
-        y = []
-        M = []
-        for row in reader:
-            y.append(float(row[0]))
-            M.append(float(row[3]))
-
-    return np.array(y), np.array(M)
+    return np.array(y), np.array(V), np.array(M)
 
 
 def read_Torque_data(filename):
@@ -52,8 +43,8 @@ Ixx1 = am.Ixx1
 J1 = am.J1
 
 
-y_vals, M = read_Moment_data('wp4/momentPos.csv')
-y_vals, M2 = read_Moment_data2('wp4/momentNeg.csv')
+y_vals,V, M = read_Moment_data('wp4/momentPos.csv')
+y_vals,V2, M2 = read_Moment_data('wp4/momentNeg.csv')
 M2[-1]=0
 T = read_Torque_data('wp4/TorquePos.csv')
 T2 = read_Torque_data('wp4/TorqueNeg.csv')
